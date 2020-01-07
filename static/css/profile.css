@@ -1,0 +1,37 @@
+#profile_title {
+  text-align: center;
+  color: #98bff1;
+  font-size: 40px
+}
+
+.profile_type_title {
+  text-align: center;
+  font-weight: bold;
+  color: #98bff1;
+  font-size: 25px
+}
+
+.input_form,
+.submit_button {
+  margin: 10px auto;
+  max-width: 300px;
+}
+
+#save_button {
+  display: block;
+  background-color:  #39ea0c;
+}
+
+#save_button:hover {
+  background-color:  #79ea5c;
+}
+
+#group_number {
+  display: block;
+  margin: 10px auto;
+}
+
+#department_number {
+  display: block;
+  margin: 10px auto;
+}

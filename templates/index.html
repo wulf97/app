@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if session %}
+<br>
+<br>
+<br>
+<p>id: {{ session.id }}</p>
+<p>login: {{ session.login }}</p>
+<p>name: {{ session.name }}</p>
+<p>surname: {{ session.surname }}</p>
+<p>patronymic: {{ session.patronymic }}</p>
+{% endif %}
+{% endblock %}

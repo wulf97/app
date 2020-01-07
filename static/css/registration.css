@@ -1,0 +1,33 @@
+.registration_form {
+  margin: 100px auto;
+  padding: 20px;
+  padding-right: 30px;
+  min-width: 250px;
+  max-width: 300px;
+  width: 40%;
+  background-color: #ffffff;
+  border: 1px solid #a9bcd8;
+  border-radius: 3px;
+  box-shadow: 0 0 10px #a9bcd8;
+}
+
+.switch_registration {
+  padding: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #40a930;
+  cursor: pointer;
+}
+
+.switch_registration:hover {
+  background-color: #5dd84b;
+}
+
+#registration_button {
+  background-color:  #ea0cba;
+}
+
+#registration_button:hover {
+  background-color:  #e067c7;
+}

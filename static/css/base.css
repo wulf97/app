@@ -1,0 +1,129 @@
+body {
+  margin:0px;
+  padding:0px;
+  background-color:#f3f4f7;
+  font-family: Arial;
+}
+
+#top_bar {
+  position: fixed;
+  height: 40px;
+  width: 100%;
+  top: 0px;
+  background-color: #354d73;
+  box-shadow: 0px 2px 10px #a9bcd8;
+}
+
+#top_bar_content {
+  float: right;
+  height: 100%;
+}
+
+#logout_button_link,
+#login_button_link,
+#profile_button_link,
+#control_panel_button_link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+#logout_button_wrap {
+  width: 105px;
+  padding: 8px;
+  color: #5c9beb;
+  font-size: 20px;
+  font-weight: bold;
+  background-image: url(../img/logout_icon.png);
+  background-size:25px;
+  background-repeat: no-repeat;
+  background-position: 90px;
+}
+
+#logout_button_wrap:hover {
+  background-color: #496082;
+}
+
+#login_button_wrap {
+  width: 90px;
+  padding: 8px;
+  color: #5c9beb;
+  font-size: 20px;
+  font-weight: bold;
+  background-image: url(../img/login_icon.png);
+  background-size:25px;
+  background-repeat: no-repeat;
+  background-position: 70px;
+}
+
+#login_button_wrap:hover {
+  background-color: #496082;
+}
+
+#profile_button_wrap {
+  width: 180px;
+  padding: 8px;
+  color: #5c9beb;
+  font-size: 20px;
+  font-weight: bold;
+  background-image: url(../img/profile_icon.png);
+  background-size:25px;
+  background-repeat: no-repeat;
+  background-position: 160px;
+}
+
+#profile_button_wrap:hover {
+  background-color: #496082;
+}
+
+#control_panel_button_wrap {
+  width: 230px;
+  padding: 8px;
+  color: #5c9beb;
+  font-size: 20px;
+  font-weight: bold;
+  background-image: url(../img/control_panel_icon.png);
+  background-size:25px;
+  background-repeat: no-repeat;
+  background-position: 210px;
+}
+
+#control_panel_button_wrap:hover {
+  background-color: #496082;
+}
+
+.input_form {
+  display: block;
+  margin-top: 10px;
+  padding: 5px;
+  height: 40px;
+  width: 100%;
+  background-color: #eceff3;
+  color: #354d72;
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px solid #a9bcd8;
+  outline: none;
+}
+
+.list_form {
+  display: block;
+  margin-top: 10px;
+  padding: 5px;
+  background-color: #eceff3;
+  color: #354d72;
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px solid #a9bcd8;
+  outline: none;
+}
+
+.submit_button {
+  /* display: inline-block; */
+  margin-top: 10px;
+  padding: 15px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  border: 0px;
+  cursor: pointer;
+}

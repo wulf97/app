@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}{% endblock %}</title>
+	<link href={{ url_for('static', filename = 'css/base.css') }} rel="stylesheet">
+	{% block style %}{% endblock %}
+</head>
+<body>
+	<div id="top_bar">
+		<div id="top_bar_content">
+			{% if session.acc_type %}
+			{% if session.acc_type == 3 %}
+			<a href={{ url_for('control_panel', act = 'department') }} id="control_panel_button_link">
+				<div id="control_panel_button_wrap">Панель управления</div>
+			</a>
+			{% else %}
+			<a href={{ url_for('profile') }} id="profile_button_link">
+				<div id="profile_button_wrap">Мой профиль</div>
+			</a>
+			{% endif %}
+			<a href={{ url_for('logout') }} id="logout_button_link">
+				<div id="logout_button_wrap">Выход</div>
+			</a>
+			{% else %}
+			<a href={{ url_for('login') }} id="login_button_link">
+				<div id="login_button_wrap">Вход</div>
+			</a>
+			{% endif %}
+		</div>
+	</div>
+	{% block content %}{% endblock %}
+</body>
+</html>

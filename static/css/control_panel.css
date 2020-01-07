@@ -1,0 +1,81 @@
+.input_form {
+  display: inline-block;
+  max-width: 350px;
+}
+
+#control_panel_title {
+  text-align: center;
+  color: #98bff1;
+  font-size: 40px
+}
+
+#contral_panel_content_table {
+  width: 100%;
+}
+
+#control_panel_nav {
+  width: 300px;
+  box-shadow: 0 0 10px #a9bcd8;
+}
+
+.nav_item {
+  padding: 10px;
+  background-color: #ffffff;
+  color: #5b9beb;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.nav_item:hover {
+  background-color: #d8eaf3;
+  color: #80b2f1;
+  border-right: 5px solid #5b9beb;
+}
+
+#control_panel_insert_wrap {
+  padding: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #a9bcd8;
+}
+
+#add_button {
+  background-color:  #ea0cba;
+}
+
+#add_button:hover {
+  background-color:  #e067c7;
+}
+
+.control_panel_out_table {
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #a9bcd8;
+}
+
+.control_panel_out_table_tr:hover {
+  background-color: #cccccc;
+  cursor: pointer;
+}
+
+.control_panel_out_table_td {
+  padding: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #5b9beb;
+  border: 3px solid #cccccc;
+}
+
+#del_button {
+  height: 20px;
+  background-color: #ff0000;
+}
+
+#del_button:hover {
+  background-color: #ef4e4e;
+}

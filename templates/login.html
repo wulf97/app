@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block style %}<link href={{ url_for('static', filename = 'css/login.css') }} rel="stylesheet">{% endblock %}
+
+{% block content %}
+
+<form action={{ url_for('login') }} method="post" id="login_form">
+	{{ form.login(size = 20, class = 'input_form', placeholder = 'Логин') }}
+	{{ form.password(size = 20, class = 'input_form', placeholder = 'Пароль') }}
+	<a href={{ url_for('registration', acc_type = 'student') }} style="text-decoration: none">
+		<input type="button" class="submit_button" id="registration_button" value="Регистрация">
+	</a>
+
+	{{ form.submit(class = 'submit_button', id = 'login_button') }}
+</form>
+{% endblock %}

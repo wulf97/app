@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block style %}<link href={{ url_for('static', filename = 'css/registration.css') }} rel="stylesheet">{% endblock %}
+
+{% block content %}
+
+<form action={{ url_for('registration', acc_type = request.args.get('acc_type')) }} method="post" class="registration_form">
+	<a href={{ url_for('registration', acc_type = 'student') }} style="text-decoration: none">
+		<dev class="switch_registration">Студент</dev>
+	</a>
+	<a href={{ url_for('registration', acc_type = 'teacher') }} style="text-decoration: none">
+		<dev class="switch_registration">Преподаватель</dev>
+	</a>
+	{{ form.login(size = 20, class = 'input_form', placeholder = 'Логин') }}
+	{{ form.password(size = 20, class = 'input_form', placeholder = 'Пароль') }}
+	{{ form.confirm_password(size = 20, class = 'input_form', placeholder = 'Подтвердить пароль') }}
+	{{ form.name(size = 20, class = 'input_form', placeholder = 'Имя') }}
+	{{ form.surname(size = 20, class = 'input_form', placeholder = 'Фамилия') }}
+	{{ form.patronymic(size = 20, class = 'input_form', placeholder = 'Отчество') }}
+	{% if acc_type == 1 %}
+	{{ form.group_number(class = 'list_form') }}
+	{% elif acc_type == 2 %}
+	{{ form.science_degree(size = 30, class = 'input_form', placeholder = 'Научная степень') }}
+	{{ form.number_of_publications(type = 'number', size = 4, class = 'input_form', placeholder = 'Число публикаций') }}
+	{{ form.department_number(class = 'list_form') }}
+	{% endif %}
+	{{ form.submit(class = 'submit_button', id = 'registration_button') }}
+</form>
+{% endblock %}

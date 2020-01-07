@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block style %}<link href={{ url_for('static', filename = 'css/profile.css') }} rel="stylesheet">{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<h1 id="profile_title">Профиль</h1>
+{% if session.acc_type == 1 %}
+<p class="profile_type_title">Студент</p>
+{{ form.login(size = 20, class = 'input_form', placeholder = 'Логин') }}
+{{ form.name(size = 20, class = 'input_form', placeholder = 'Имя') }}
+{{ form.surname(size = 20, class = 'input_form', placeholder = 'Фамилия') }}
+{{ form.patronymic(size = 20, class = 'input_form', placeholder = 'Отчество') }}
+{{ form.group_number(class = 'list_form', id= 'group_number') }}
+{{ form.submit(class = 'submit_button', id = 'save_button') }}
+{% elif session.acc_type == 2 %}
+<p class="profile_type_title">Преподаватель</p>
+{{ form.login(size = 20, class = 'input_form', placeholder = 'Логин') }}
+{{ form.name(size = 20, class = 'input_form', placeholder = 'Имя') }}
+{{ form.surname(size = 20, class = 'input_form', placeholder = 'Фамилия') }}
+{{ form.patronymic(size = 20, class = 'input_form', placeholder = 'Отчество') }}
+{{ form.science_degree(size = 30, class = 'input_form', placeholder = 'Научная степень') }}
+{{ form.number_of_publications(type = 'number', size = 4, class = 'input_form', placeholder = 'Число публикаций') }}
+{{ form.department_number(class = 'list_form', id = 'department_number') }}
+{{ form.submit(class = 'submit_button', id = 'save_button') }}
+{% endif %}
+</form>
+{% endblock %}

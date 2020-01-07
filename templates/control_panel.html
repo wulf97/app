@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block style %}<link href={{ url_for('static', filename = 'css/control_panel.css') }} rel="stylesheet">{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<h1 id="control_panel_title">Панель управления</h1>
+
+<table id="contral_panel_content_table">
+  <tr style="vertical-align:top">
+    <td style="width:300px">
+      <nav id="control_panel_nav">
+        <a href={{ url_for('control_panel', act = 'department') }} style="text-decoration: none">
+          <div class="nav_item">Кафедра</div>
+        </a>
+        <a href={{ url_for('control_panel', act = 'speciality') }} style="text-decoration: none">
+          <div class="nav_item">Специальность</div>
+        </a>
+        <a href={{ url_for('control_panel', act = 'semester_curriculum') }} style="text-decoration: none">
+          <div class="nav_item">Учебный планы на семестр</div>
+        </a>
+        <a href={{ url_for('control_panel', act = 'subject_in_the_curriculum') }} style="text-decoration: none">
+          <div class="nav_item">Предмет в учебном плане</div>
+        </a>
+        <a href={{ url_for('control_panel', act = 'lesson') }} style="text-decoration: none">
+          <div class="nav_item">Пара</div>
+        </a>
+        <a href={{ url_for('control_panel', act = 'group') }} style="text-decoration: none">
+          <div class="nav_item">Группа</div>
+        </a>
+        <a href={{ url_for('control_panel', act = 'audience') }} style="text-decoration: none">
+          <div class="nav_item">Аудитория</div>
+        </a>
+      </nav>
+    </td>
+    <td>
+      <div id="control_panel_insert_wrap">
+        <form action={{ url_for('control_panel', act = request.args.get('act')) }} method="post" id="login_form">
+          <table style="width: 100%">
+            <tr>
+              <td>
+                {% if request.args.get('act') == 'department' %}
+              	{{ form.department_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер кафедры') }}
+
+                {% elif request.args.get('act') == 'speciality' %}
+                {{ form.speciality_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер специальности') }}
+                {{ form.speciality_name(size = 30, class = 'input_form', placeholder = 'Название специальности') }}
+
+                {% elif request.args.get('act') == 'semester_curriculum' %}
+                {{ form.semester_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер семестра') }}
+                {{ form.speciality_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер специальности') }}
+
+                {% elif request.args.get('act') == 'subject_in_the_curriculum' %}
+                {{ form.subject_name(size = 30, class = 'input_form', placeholder = 'Название предмета') }}
+                {{ form.number_of_lection(type = 'number', size = 4, class = 'input_form', placeholder = 'Количество лекций') }}
+                {{ form.number_of_labs(type = 'number', size = 4, class = 'input_form', placeholder = 'Количество лабораторных работ') }}
+                {{ form.kr(class = 'input_form', style='margin-left: 10px; width: 30px; height: 30px; cursor: pointer;') }}
+                {{ form.semester_id(type = 'number', size = 4, class = 'input_form', placeholder = 'id учебного плана') }}
+
+
+                {% elif request.args.get('act') == 'lesson' %}
+                {{ form.day_of_the_week(type = 'number', size = 4, class = 'input_form', placeholder = 'День недели') }}
+                {{ form.serial_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер пары') }}
+                {{ form.subject_type(type = 'number', size = 4, class = 'input_form', placeholder = 'Тип пары') }}
+                {{ form.audience_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер аудитории') }}
+                {{ form.subject_id(type = 'number', size = 4, class = 'input_form', placeholder = 'id предмета в учебном плане') }}
+
+                {% elif request.args.get('act') == 'group' %}
+
+
+                {% elif request.args.get('act') == 'audience' %}
+
+                {% endif %}
+              </td>
+              <td style="width: 100px">
+                {{ form.submit(class = 'submit_button', id = 'add_button') }}
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      {% if request.args.get('act') == 'department' %}
+      {% for i in rec %}
+      <table class="control_panel_out_table">
+        <caption>
+          <a href={{ url_for('control_panel', act = 'department', del = i[0]) }} style="text-decoration: none">
+            <div class="submit_button" id="del_button">Удалить</div>
+          </a>
+        </caption>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер кафедры</td>
+          <td class="control_panel_out_table_td">{{ i[0] }}</td>
+        </tr>
+      </table>
+      {% endfor %}
+      {% elif request.args.get('act') == 'speciality' %}
+      {% for i in rec %}
+      <table class="control_panel_out_table">
+        <caption>
+          <a href={{ url_for('control_panel', act = 'speciality', del = i[0]) }} style="text-decoration: none">
+            <div class="submit_button" id="del_button">Удалить</div>
+          </a>
+        </caption>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер специальности</td>
+          <td class="control_panel_out_table_td">{{ i[0] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Название специальности</td>
+          <td class="control_panel_out_table_td">{{ i[1] }}</td>
+        </tr>
+      </table>
+      {% endfor %}
+      {% elif request.args.get('act') == 'semester_curriculum' %}
+      {% for i in rec %}
+      <table class="control_panel_out_table">
+        <caption>
+          <a href={{ url_for('control_panel', act = 'semester_curriculum', del = i[0]) }} style="text-decoration: none">
+            <div class="submit_button" id="del_button">Удалить</div>
+          </a>
+        </caption>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">id</td>
+          <td class="control_panel_out_table_td">{{ i[0] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер семестра</td>
+          <td class="control_panel_out_table_td">{{ i[1] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер специальности</td>
+          <td class="control_panel_out_table_td">{{ i[2] }}</td>
+        </tr>
+      </table>
+      {% endfor %}
+      {% elif request.args.get('act') == 'subject_in_the_curriculum' %}
+      {% for i in rec %}
+      <table class="control_panel_out_table">
+        <caption>
+          <a href={{ url_for('control_panel', act = 'subject_in_the_curriculum', del = i[0]) }} style="text-decoration: none">
+            <div class="submit_button" id="del_button">Удалить</div>
+          </a>
+        </caption>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">id</td>
+          <td class="control_panel_out_table_td">{{ i[0] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Название предмета</td>
+          <td class="control_panel_out_table_td">{{ i[1] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Количество лекций</td>
+          <td class="control_panel_out_table_td">{{ i[2] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Количество лабораторных работ</td>
+          <td class="control_panel_out_table_td">{{ i[3] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Наличие КР</td>
+          <td class="control_panel_out_table_td">{{ i[4] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">id учебного плана</td>
+          <td class="control_panel_out_table_td">{{ i[5] }}</td>
+        </tr>
+      </table>
+      {% endfor %}
+      {% elif request.args.get('act') == 'lesson' %}
+      {% for i in rec %}
+      <table class="control_panel_out_table">
+        <caption>
+          <a href={{ url_for('control_panel', act = 'lesson', del = i[0]) }} style="text-decoration: none">
+            <div class="submit_button" id="del_button">Удалить</div>
+          </a>
+        </caption>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">id</td>
+          <td class="control_panel_out_table_td">{{ i[0] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">День недели</td>
+          <td class="control_panel_out_table_td">{{ i[1] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер пары</td>
+          <td class="control_panel_out_table_td">{{ i[2] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Тип пары</td>
+          <td class="control_panel_out_table_td">{{ i[3] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер аудитории</td>
+          <td class="control_panel_out_table_td">{{ i[4] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">id предмета в учебном плане</td>
+          <td class="control_panel_out_table_td">{{ i[5] }}</td>
+        </tr>
+      </table>
+      {% endfor %}
+      {% elif request.args.get('act') == 'group' %}
+      {% for i in rec %}
+      <table class="control_panel_out_table">
+        <caption>
+          <a href={{ url_for('control_panel', act = 'group', del = i[0]) }} style="text-decoration: none">
+            <div class="submit_button" id="del_button">Удалить</div>
+          </a>
+        </caption>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер группы</td>
+          <td class="control_panel_out_table_td">{{ i[0] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер семестра</td>
+          <td class="control_panel_out_table_td">{{ i[1] }}</td>
+        </tr>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер специальности</td>
+          <td class="control_panel_out_table_td">{{ i[2] }}</td>
+        </tr>
+      </table>
+      {% endfor %}
+      {% elif request.args.get('act') == 'audience' %}
+      {% for i in rec %}
+      <table class="control_panel_out_table">
+        <caption>
+          <a href={{ url_for('control_panel', act = 'audience', del = i[0]) }} style="text-decoration: none">
+            <div class="submit_button" id="del_button">Удалить</div>
+          </a>
+        </caption>
+        <tr class="control_panel_out_table_tr">
+          <td class="control_panel_out_table_td">Номер аудитории</td>
+          <td class="control_panel_out_table_td">{{ i[0] }}</td>
+        </tr>
+      </table>
+      {% endfor %}
+      {% endif %}
+    </td>
+  </tr>
+</table>
+{% endblock %}
