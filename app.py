@@ -126,13 +126,8 @@ def registration():
 
 		return redirect(url_for('index'))
 
-	#
+	# Задание полей выбора
 	if acc_type == 1:
-		# conn = psycopg2.connect(dbname = dbconfig['dbname'],
-	    #                         user = dbconfig['user'],
-	    #                         password = dbconfig['password'],
-	    #                         host = dbconfig['host'])
-		# cursor = conn.cursor()
 		sql = '''select "number" from "group"'''
 		cursor.execute(sql)
 		rec = cursor.fetchall()
@@ -146,9 +141,22 @@ def registration():
 				choices = [(0, None)]
 
 		form.group_number.choices = choices;
+	elif acc_type ==2:
+		sql = '''select "number" from "department"'''
+		cursor.execute(sql)
+		rec = cursor.fetchall()
+
+		if rec:
+		    choices = []
+		    if len(rec) > 0:
+		        for i in rec:
+		            choices += [(str(i[0]), str(i[0]))]
+		else:
+		    choices = [(0, None)]
+
+		form.department_number.choices = choices;
 
 	# Закрытие соединения с базой
-	conn.commit()
 	cursor.close()
 	conn.close()
 
