@@ -127,3 +127,33 @@ body {
   border: 0px;
   cursor: pointer;
 }
+
+#main_title {
+  text-align: center;
+  color: #98bff1;
+  font-size: 40px
+}
+
+.nav_item {
+  padding: 10px;
+  background-color: #ffffff;
+  color: #5b9beb;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.nav_item:hover {
+  background-color: #d8eaf3;
+  color: #80b2f1;
+  border-right: 5px solid #5b9beb;
+}
+
+#main_content_table {
+  width: 100%;
+}
+
+#main_nav {
+  width: 300px;
+  box-shadow: 0 0 10px #a9bcd8;
+}

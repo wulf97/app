@@ -20,26 +20,26 @@ class RegistrationStudentForm(Form):
     name = StringField('name', validators = [Required()])
     patronymic = StringField('patronymic', validators = [Required()])
     submit = SubmitField('Отправить')
-    conn = psycopg2.connect(dbname = dbconfig['dbname'],
-                            user = dbconfig['user'],
-                            password = dbconfig['password'],
-                            host = dbconfig['host'])
-    cursor = conn.cursor()
-    sql = '''select "number" from "group"'''
-    cursor.execute(sql)
-    rec = cursor.fetchall()
+    # conn = psycopg2.connect(dbname = dbconfig['dbname'],
+    #                         user = dbconfig['user'],
+    #                         password = dbconfig['password'],
+    #                         host = dbconfig['host'])
+    # cursor = conn.cursor()
+    # sql = '''select "number" from "group"'''
+    # cursor.execute(sql)
+    # rec = cursor.fetchall()
+    #
+    # if rec:
+    #     choices = []
+    #     if len(rec) > 0:
+    #         for i in rec:
+    #             choices += [(str(i[0]), str(i[0]))]
+    # else:
+    #     choices = [(0, None)]
+    # cursor.close()
+    # conn.close()
 
-    if rec:
-        choices = []
-        if len(rec) > 0:
-            for i in rec:
-                choices += [(str(i[0]), str(i[0]))]
-    else:
-        choices = [(0, None)]
-    cursor.close()
-    conn.close()
-
-    group_number = SelectField('group_number', choices = choices)
+    group_number = SelectField('group_number', choices = [('0', 'None')])
 
 # ********************************
 class RegistrationTeacherForm(Form):

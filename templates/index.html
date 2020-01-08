@@ -4,6 +4,38 @@
 {% if session %}
 <br>
 <br>
+<h1 id="main_title">Личный кабинет</h1>
+<table id="main_content_table">
+  <tr style="vertical-align:top">
+    <td style="width:300px">
+      <nav id="main_nav">
+        {% if session.acc_type != 3 %}
+        <a href={{ url_for('index', act = 'my_schedule') }} style="text-decoration: none">
+          <div class="nav_item">Моё расписание</div>
+        </a>
+        {% endif %}
+        <a href={{ url_for('index', act = 'group_schedule') }} style="text-decoration: none">
+          <div class="nav_item">Расписание групп</div>
+        </a>
+        <a href={{ url_for('index', act = 'teacher_schedule') }} style="text-decoration: none">
+          <div class="nav_item">Расписание преподавателей</div>
+        </a>
+      </nav>
+    </td>
+    <td>
+      {% if request.args.get('act') == 'my_schedule' %}
+        <p>Hey1</p>
+      {% elif request.args.get('act') == 'group_schedule' %}
+        <p>Hey2</p>
+      {% elif request.args.get('act') == 'teacher_schedule' %}
+        <p>Hey3</p>
+      {% endif %}
+    </td>
+  </tr>
+</table>
+
+<br>
+<br>
 <br>
 <p>id: {{ session.id }}</p>
 <p>login: {{ session.login }}</p>

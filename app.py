@@ -66,6 +66,13 @@ def login():
 # Регистрация в системе
 @app.route('/registration', methods = ['POST', 'GET'])
 def registration():
+	# Записываем в базу данные пользователя
+	conn = psycopg2.connect(dbname = dbconfig['dbname'],
+							user = dbconfig['user'],
+							password = dbconfig['password'],
+							host = dbconfig['host'])
+	cursor = conn.cursor()
+
 	if request.args.get('acc_type', '') == 'student':
 		acc_type = 1
 		form = RegistrationStudentForm(request.form)
@@ -73,8 +80,8 @@ def registration():
 		acc_type = 2
 		form = RegistrationTeacherForm(request.form)
 
+	# Если кнопка 'Отправить' нажата
 	if request.method == 'POST' and form.validate():
-		print('kkk')
 		login = request.form.get('login', '')
 		password = request.form.get('password', '')
 		name = request.form.get('name', '')
@@ -86,12 +93,6 @@ def registration():
 			print('Check password')
 			return render_template('registration.html', form = form, acc_type = acc_type)
 
-		# Записываем в базу данные пользователя
-		conn = psycopg2.connect(dbname = dbconfig['dbname'],
-								user = dbconfig['user'],
-								password = dbconfig['password'],
-								host = dbconfig['host'])
-		cursor = conn.cursor()
 		sql = '''insert into "user"("login", "password", "name", "surname", "patronymic", "user_type")'''
 		sql += '''values('{}', '{}', '{}', '{}', '{}', '{}') returning "id"'''.format(login, password, name, surname, patronymic, acc_type)
 		cursor.execute(sql)
@@ -125,7 +126,33 @@ def registration():
 
 		return redirect(url_for('index'))
 
-	return render_template('registration.html', form = form, acc_type = acc_type)
+	#
+	if acc_type == 1:
+		# conn = psycopg2.connect(dbname = dbconfig['dbname'],
+	    #                         user = dbconfig['user'],
+	    #                         password = dbconfig['password'],
+	    #                         host = dbconfig['host'])
+		# cursor = conn.cursor()
+		sql = '''select "number" from "group"'''
+		cursor.execute(sql)
+		rec = cursor.fetchall()
+
+		if rec:
+			choices = []
+			if len(rec) > 0:
+				for i in rec:
+					choices += [(str(i[0]), str(i[0]))]
+			else:
+				choices = [(0, None)]
+
+		form.group_number.choices = choices;
+
+	# Закрытие соединения с базой
+	conn.commit()
+	cursor.close()
+	conn.close()
+
+	return render_template('registration.html', form = form, choices = choices, acc_type = acc_type)
 
 # **********************************************************
 # Выход из профиля
