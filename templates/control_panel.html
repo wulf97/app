@@ -40,35 +40,68 @@
             <tr>
               <td>
                 {% if request.args.get('act') == 'department' %}
+                {{ form.department_number.label('Номер кафедры') }}
               	{{ form.department_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер кафедры') }}
 
                 {% elif request.args.get('act') == 'speciality' %}
+                {{ form.speciality_number.label('Номер специальности') }}
                 {{ form.speciality_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер специальности') }}
+
+                {{ form.speciality_name.label('Название специальности') }}
                 {{ form.speciality_name(size = 30, class = 'input_form', placeholder = 'Название специальности') }}
 
                 {% elif request.args.get('act') == 'semester_curriculum' %}
+                {{ form.semester_number.label('Номер семестра') }}
                 {{ form.semester_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер семестра') }}
+
+                {{ form.speciality_number.label('Номер специальности') }}
                 {{ form.speciality_number(class = 'input_form', placeholder = 'Номер специальности') }}
 
                 {% elif request.args.get('act') == 'subject_in_the_curriculum' %}
+                {{ form.subject_name.label('Название предмета') }}
                 {{ form.subject_name(size = 30, class = 'input_form', placeholder = 'Название предмета') }}
-                {{ form.number_of_lection(type = 'number', size = 4, class = 'input_form', placeholder = 'Количество лекций') }}
-                {{ form.number_of_labs(type = 'number', size = 4, class = 'input_form', placeholder = 'Количество лабораторных работ') }}
-                {{ form.kr(class = 'input_form', style='margin-left: 10px; width: 30px; height: 30px; cursor: pointer;') }}
-                {{ form.semester_id(type = 'number', size = 4, class = 'input_form', placeholder = 'id учебного плана') }}
 
+                {{ form.number_of_lection.label('Количество лекций') }}
+                {{ form.number_of_lection(type = 'number', size = 4, class = 'input_form', placeholder = 'Количество лекций') }}
+
+                {{ form.number_of_labs.label('Количество лабораторных работ') }}
+                {{ form.number_of_labs(type = 'number', size = 4, class = 'input_form', placeholder = 'Количество лабораторных работ') }}
+
+                {{ form.kr(class = 'input_form', style='margin-left: 10px; width: 30px; height: 30px; cursor: pointer;') }}
+                {{ form.kr.label('Наличие КР', style='display: inline-block; vertical-align: top; padding-top: 8px;') }}
+
+                {{ form.semester_id.label('Id учебного плана') }}
+                {{ form.semester_id(type = 'number', class = 'input_form', placeholder = 'Id учебного плана') }}
 
                 {% elif request.args.get('act') == 'lesson' %}
+                {{ form.day_of_the_week.label('День недели') }}
                 {{ form.day_of_the_week(type = 'number', size = 4, class = 'input_form', placeholder = 'День недели') }}
+
+                {{ form.serial_number.label('Номер пары') }}
                 {{ form.serial_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер пары') }}
+
+                {{ form.subject_type.label('Тип пары') }}
                 {{ form.subject_type(type = 'number', size = 4, class = 'input_form', placeholder = 'Тип пары') }}
+
+                {{ form.audience_number.label('Номер аудитории') }}
                 {{ form.audience_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер аудитории') }}
-                {{ form.subject_id(type = 'number', size = 4, class = 'input_form', placeholder = 'id предмета в учебном плане') }}
+
+                {{ form.subject_id.label('Id предмета в учебном плане') }}
+                {{ form.subject_id(type = 'number', size = 4, class = 'input_form', placeholder = 'Id предмета в учебном плане') }}
 
                 {% elif request.args.get('act') == 'group' %}
+                {{ form.group_number.label('Номер группы') }}
+                {{ form.group_number(size = 5, class = 'input_form', placeholder = 'Номер группы') }}
 
+                {{ form.current_sem.label('Номер семестра') }}
+                {{ form.current_sem(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер семестра') }}
+
+                {{ form.speciality_number.label('Номер специальности') }}
+                {{ form.speciality_number(class = 'input_form', placeholder = 'Номер специальности') }}
 
                 {% elif request.args.get('act') == 'audience' %}
+                {{ form.audience_number.label('Номер аудитории') }}
+                {{ form.audience_number(size = 5, class = 'input_form', placeholder = 'Номер аудитории') }}
 
                 {% endif %}
               </td>

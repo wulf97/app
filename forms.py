@@ -78,7 +78,7 @@ class AddSubjectInTheCurriculum(Form):
     number_of_lection = IntegerField('number_of_lection', validators = [NumberRange(0, 40)])
     number_of_labs = IntegerField('number_of_lection', validators = [NumberRange(0, 40)])
     kr = BooleanField('kr')
-    semester_id = IntegerField('semester_id')
+    semester_id = SelectField('semester_id', choices = [('0', 'None')])
     submit = SubmitField('Добавить')
 
 # ********************************

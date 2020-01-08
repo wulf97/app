@@ -5,6 +5,15 @@ body {
   font-family: Arial;
 }
 
+label {
+  display: block;
+  margin-top: 7px;
+  margin-bottom: -5px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #97bff1;
+}
+
 #top_bar {
   position: fixed;
   height: 40px;

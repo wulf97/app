@@ -188,9 +188,14 @@ def control_panel():
 							host = dbconfig['host'])
 	cursor = conn.cursor()
 	# Получение списка номеров специальностей
-	sql = '''select "number" from "speciality"'''
-	cursor.execute(sql)
-	rec = cursor.fetchall()
+	if request.args.get('act', '') == 'semester_curriculum':
+		sql = '''select "number" from "speciality"'''
+		cursor.execute(sql)
+		rec = cursor.fetchall()
+	elif request.args.get('act', '') == 'subject_in_the_curriculum':
+		sql = '''select "id" from "semester_curriculum"'''
+		cursor.execute(sql)
+		rec = cursor.fetchall()
 
 	if rec:
 		choices = []
@@ -203,6 +208,8 @@ def control_panel():
 	# Установка choices
 	if hasattr(form, 'speciality_number'):
 		form.speciality_number.choices = choices
+	if hasattr(form, 'semester_id'):
+		form.semester_id.choices = choices
 
 	if request.method == 'POST' and form.validate():
 		if request.args.get('act', '') == 'department':
@@ -271,10 +278,7 @@ def control_panel():
 							host = dbconfig['host'])
 	cursor = conn.cursor()
 
-	# form.speciality_number.choices = choices
 	rec, buf = update_control_panel_content();
-	# if hasattr(form, 'speciality_number'):
-	# 	form.speciality_number.choices = choices
 
 	return render_template('control_panel.html', form = form, rec = rec)
 
@@ -302,7 +306,7 @@ def update_control_panel_content():
 		form = AddLesson(request.form)
 		sql = '''select * from "lesson"'''
 	elif request.args.get('act', '') == 'group':
-		form = AddLesson(request.form)
+		form = AddGroup(request.form)
 		sql = '''select * from "group"'''
 	elif request.args.get('act', '') == 'audience':
 		form = AddAudience(request.form)
