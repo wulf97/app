@@ -48,7 +48,7 @@
 
                 {% elif request.args.get('act') == 'semester_curriculum' %}
                 {{ form.semester_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер семестра') }}
-                {{ form.speciality_number(type = 'number', size = 4, class = 'input_form', placeholder = 'Номер специальности') }}
+                {{ form.speciality_number(class = 'input_form', placeholder = 'Номер специальности') }}
 
                 {% elif request.args.get('act') == 'subject_in_the_curriculum' %}
                 {{ form.subject_name(size = 30, class = 'input_form', placeholder = 'Название предмета') }}

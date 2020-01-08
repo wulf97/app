@@ -5,6 +5,7 @@
 {% block content %}
 <br>
 <br>
+<form action={{ url_for('profile') }} method="post">
 <h1 id="profile_title">Профиль</h1>
 {% if session.acc_type == 1 %}
 <p class="profile_type_title">Студент</p>

@@ -180,6 +180,30 @@ def logout():
 @app.route('/control_panel', methods = ['GET', 'POST'])
 def control_panel():
 	rec, form = update_control_panel_content();
+
+	# Открытие соединения с БД
+	conn = psycopg2.connect(dbname = dbconfig['dbname'],
+							user = dbconfig['user'],
+							password = dbconfig['password'],
+							host = dbconfig['host'])
+	cursor = conn.cursor()
+	# Получение списка номеров специальностей
+	sql = '''select "number" from "speciality"'''
+	cursor.execute(sql)
+	rec = cursor.fetchall()
+
+	if rec:
+		choices = []
+		if len(rec) > 0:
+			for i in rec:
+				choices += [(str(i[0]), str(i[0]))]
+	else:
+		choices = [(0, None)]
+
+	# Установка choices
+	if hasattr(form, 'speciality_number'):
+		form.speciality_number.choices = choices
+
 	if request.method == 'POST' and form.validate():
 		if request.args.get('act', '') == 'department':
 			department_number = request.form.get('department_number', '')
@@ -192,6 +216,8 @@ def control_panel():
 			id = request.form.get('id', '')
 			semester_number = request.form.get('semester_number', '')
 			speciality_number = request.form.get('speciality_number', '')
+			print(semester_number)
+			print(speciality_number)
 			sql = '''insert into "semester_curriculum"("semester_number", "speciality_number") values('{}', '{}')'''.format(semester_number, speciality_number)
 		elif request.args.get('act', '') == 'subject_in_the_curriculum':
 			subject_name = request.form.get('subject_name', '')
@@ -209,21 +235,13 @@ def control_panel():
 			subject_id = request.form.get('subject_id', '')
 			sql = '''insert into "lesson"("day_of_the_week", "serial_number", "subject_type", "audience_number", "subject_id") values('{}', '{}', '{}', '{}', '{}')'''.format(day_of_the_week, serial_number, subject_type, audience_number, subject_id)
 
-		# Открытие соединения с БД
-		conn = psycopg2.connect(dbname = dbconfig['dbname'],
-								user = dbconfig['user'],
-								password = dbconfig['password'],
-								host = dbconfig['host'])
-		cursor = conn.cursor()
 		# Выполнение записи в БД
 		cursor.execute(sql)
-
-		# Закрытие соединения с БД
 		conn.commit()
-		cursor.close()
-		conn.close()
 
-		rec, form = update_control_panel_content();
+	# Закрытие соединения с БД
+	cursor.close()
+	conn.close()
 
 	# Удаление строк из БД
 	if request.args.get('del', ''):
@@ -245,6 +263,18 @@ def control_panel():
 		cursor.close()
 		conn.close()
 		return redirect(url_for('control_panel', act = request.args.get('act')))
+
+	#*********************
+	conn = psycopg2.connect(dbname = dbconfig['dbname'],
+							user = dbconfig['user'],
+							password = dbconfig['password'],
+							host = dbconfig['host'])
+	cursor = conn.cursor()
+
+	# form.speciality_number.choices = choices
+	rec, buf = update_control_panel_content();
+	# if hasattr(form, 'speciality_number'):
+	# 	form.speciality_number.choices = choices
 
 	return render_template('control_panel.html', form = form, rec = rec)
 
@@ -283,11 +313,114 @@ def update_control_panel_content():
 
 # **********************************************************
 # Редактирование личного профиля
-@app.route('/profile')
+@app.route('/profile', methods = ['GET', 'POST'])
 def profile():
+	conn = psycopg2.connect(dbname = dbconfig['dbname'],
+							user = dbconfig['user'],
+							password = dbconfig['password'],
+							host = dbconfig['host'])
+	cursor = conn.cursor()
+
 	if session['acc_type'] == 1:
 		form = profileStudentForm(request.form)
+		acc_type = 1
 	elif session['acc_type'] == 2:
 		form = profileTeacherForm(request.form)
+		acc_type = 2
+
+	sql = '''select * from "user" where "id" = {}'''.format(session['id'])
+	cursor.execute(sql)
+	rec = cursor.fetchone()
+	form.login.process_data(rec[1])
+	form.name.process_data(rec[3])
+	form.surname.process_data(rec[4])
+	form.patronymic.process_data(rec[5])
+
+	if acc_type == 1:
+		# Получить список всех групп
+		sql = '''select "number" from "group"'''
+		cursor.execute(sql)
+		rec = cursor.fetchall()
+
+		if rec:
+		    choices = []
+		    if len(rec) > 0:
+		        for i in rec:
+		            choices += [(str(i[0]), str(i[0]))]
+		else:
+		    choices = [(0, None)]
+
+		# Получить номер группы студента
+		sql = '''select "group_number" from "student" where "user_id" = {}'''.format(session['id'])
+		cursor.execute(sql)
+		rec = cursor.fetchone()
+
+		form.group_number.choices = choices
+		if rec:
+			form.group_number.process_data(rec[0])
+	elif acc_type == 2:
+		# Получить список всех кафедр
+		sql = '''select "number" from "department"'''
+		cursor.execute(sql)
+		rec = cursor.fetchall()
+
+		if rec:
+		    choices = []
+		    if len(rec) > 0:
+		        for i in rec:
+		            choices += [(str(i[0]), str(i[0]))]
+		else:
+		    choices = [(0, None)]
+
+		# Получить информацию о преподавателе
+		sql = '''select * from "teacher" where "user_id" = {}'''.format(session['id'])
+		cursor.execute(sql)
+		rec = cursor.fetchone()
+
+		if rec:
+			form.science_degree.process_data(rec[1])
+			form.number_of_publications.process_data(rec[2])
+			form.department_number.process_data(rec[3])
+
+		form.department_number.choices = choices
+
+	# Если нажата кнопка 'Сохранить'
+	if request.method == 'POST' and form.validate():
+		login = request.form.get('login', '')
+		name = request.form.get('name', '')
+		surname = request.form.get('surname', '')
+		patronymic = request.form.get('patronymic', '')
+
+		sql = '''update "user"'''
+		sql += '''set "login" = '{}', "name" = '{}' , "surname" = '{}', "patronymic" = '{}' '''.format(login, name, surname, patronymic)
+		sql += '''where "id" = '{}' '''.format(session['id'])
+		cursor.execute(sql)
+		conn.commit()
+
+		if acc_type == 1:
+			group_number = request.form.get('group_number', '')
+
+			sql = '''update "student"'''
+			sql += '''set "group_number" = '{}' '''.format(group_number)
+			sql += '''where "user_id" = '{}' '''.format(session['id'])
+		elif acc_type == 2:
+			science_degree = request.form.get('science_degree', '')
+			number_of_publications = request.form.get('number_of_publications', '')
+			department_number = request.form.get('department_number', '')
+
+			sql = '''update "teacher"'''
+			sql += '''set "science_degree" = '{}', "number_of_publications" = '{}', "number_of_department" = '{}' '''.format(science_degree, number_of_publications, department_number)
+			sql += '''where "user_id" = '{}' '''.format(session['id'])
+
+		cursor.execute(sql)
+		conn.commit()
+
+		cursor.close()
+		conn.close()
+		return redirect(url_for('profile'))
+
+	# Закрытие соединения с базой
+	cursor.close()
+	conn.close()
 
 	return render_template('profile.html', form = form)

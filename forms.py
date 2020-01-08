@@ -42,26 +42,7 @@ class profileStudentForm(Form):
     name = StringField('name', validators = [Required()])
     patronymic = StringField('patronymic', validators = [Required()])
     submit = SubmitField('Сохранить')
-    conn = psycopg2.connect(dbname = dbconfig['dbname'],
-                            user = dbconfig['user'],
-                            password = dbconfig['password'],
-                            host = dbconfig['host'])
-    cursor = conn.cursor()
-    sql = '''select "number" from "group"'''
-    cursor.execute(sql)
-    rec = cursor.fetchall()
-
-    if rec:
-        choices = []
-        if len(rec) > 0:
-            for i in rec:
-                choices += [(str(i[0]), str(i[0]))]
-    else:
-        choices = [(0, None)]
-    cursor.close()
-    conn.close()
-
-    group_number = SelectField('group_number', choices = choices)
+    group_number = SelectField('group_number', choices = [('0', 'None')])
 
 # ********************************
 class profileTeacherForm(Form):
@@ -72,27 +53,7 @@ class profileTeacherForm(Form):
     submit = SubmitField('Сохранить')
     science_degree = StringField('science_degree', validators = [Required()])
     number_of_publications = IntegerField('number_of_publications', validators = [NumberRange(0, 500)])
-
-    conn = psycopg2.connect(dbname = dbconfig['dbname'],
-                            user = dbconfig['user'],
-                            password = dbconfig['password'],
-                            host = dbconfig['host'])
-    cursor = conn.cursor()
-    sql = '''select "number" from "department"'''
-    cursor.execute(sql)
-    rec = cursor.fetchall()
-
-    if rec:
-        choices = []
-        if len(rec) > 0:
-            for i in rec:
-                choices += [(str(i[0]), str(i[0]))]
-    else:
-        choices = [(0, None)]
-    cursor.close()
-    conn.close()
-
-    department_number = SelectField('department_number', choices = choices)
+    department_number = SelectField('department_number', choices = [('0', 'None')])
 
 # ********************************
 class AddDepartment(Form):
@@ -108,7 +69,7 @@ class AddSpeciality(Form):
 # ********************************
 class AddSemesterCurriculum(Form):
     semester_number = IntegerField('semester_number', validators = [NumberRange(0, 12)])
-    speciality_number = IntegerField('speciality_number', validators = [NumberRange(0, 50)])
+    speciality_number = SelectField('speciality_number', choices = [('0', 'None')])
     submit = SubmitField('Добавить')
 
 # ********************************

@@ -19,7 +19,6 @@
 	{{ form.patronymic(size = 20, class = 'input_form', placeholder = 'Отчество') }}
 	{% if acc_type == 1 %}
 	{{ form.group_number(class = 'list_form') }}
-
 	{% elif acc_type == 2 %}
 	{{ form.science_degree(size = 30, class = 'input_form', placeholder = 'Научная степень') }}
 	{{ form.number_of_publications(type = 'number', size = 4, class = 'input_form', placeholder = 'Число публикаций') }}

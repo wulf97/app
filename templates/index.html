@@ -9,7 +9,7 @@
   <tr style="vertical-align:top">
     <td style="width:300px">
       <nav id="main_nav">
-        {% if session.acc_type != 3 %}
+        {% if session.acc_type != 3%}
         <a href={{ url_for('index', act = 'my_schedule') }} style="text-decoration: none">
           <div class="nav_item">Моё расписание</div>
         </a>
@@ -23,7 +23,7 @@
       </nav>
     </td>
     <td>
-      {% if request.args.get('act') == 'my_schedule' %}
+      {% if request.args.get('act') == 'my_schedule' or not request.args.get('act')%}
         <p>Hey1</p>
       {% elif request.args.get('act') == 'group_schedule' %}
         <p>Hey2</p>

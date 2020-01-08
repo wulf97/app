@@ -8,26 +8,37 @@
 </head>
 <body>
 	<div id="top_bar">
-		<div id="top_bar_content">
-			{% if session.acc_type %}
-			{% if session.acc_type == 3 %}
-			<a href={{ url_for('control_panel', act = 'department') }} id="control_panel_button_link">
-				<div id="control_panel_button_wrap">Панель управления</div>
-			</a>
-			{% else %}
-			<a href={{ url_for('profile') }} id="profile_button_link">
-				<div id="profile_button_wrap">Мой профиль</div>
-			</a>
-			{% endif %}
-			<a href={{ url_for('logout') }} id="logout_button_link">
-				<div id="logout_button_wrap">Выход</div>
-			</a>
-			{% else %}
-			<a href={{ url_for('login') }} id="login_button_link">
-				<div id="login_button_wrap">Вход</div>
-			</a>
-			{% endif %}
-		</div>
+		<table style="width: 100%; border-spacing: 0px">
+			<tr>
+				<td style="padding: 0px">
+					<div>
+						<a id="lk_logo" href="{{ url_for('index') }}">Личный кабинет</a>
+					</div>
+				</td>
+				<td style="padding: 0px">
+					<div id="top_bar_content">
+						{% if session.acc_type %}
+						{% if session.acc_type == 3 %}
+						<a href={{ url_for('control_panel', act = 'department') }} id="control_panel_button_link">
+							<div id="control_panel_button_wrap">Панель управления</div>
+						</a>
+						{% else %}
+						<a href={{ url_for('profile') }} id="profile_button_link">
+							<div id="profile_button_wrap">Мой профиль</div>
+						</a>
+						{% endif %}
+						<a href={{ url_for('logout') }} id="logout_button_link">
+							<div id="logout_button_wrap">Выход</div>
+						</a>
+						{% else %}
+						<a href={{ url_for('login') }} id="login_button_link">
+							<div id="login_button_wrap">Вход</div>
+						</a>
+						{% endif %}
+					</div>
+				</td>
+			</tr>
+		</table>
 	</div>
 	{% block content %}{% endblock %}
 </body>
